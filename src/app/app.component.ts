@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ethereal';
+
+  url: string = "";
+  onUrlChanged(event: any){
+    this.url = event;
+  }
+
+  customDescription: boolean = false;
+  onCustomDescriptionChanged(event: any){
+    this.customDescription = event;
+  }
 }
