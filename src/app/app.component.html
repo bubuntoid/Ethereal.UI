@@ -13,19 +13,22 @@
                                 <label for="icon_prefix">Youtube video url</label>
                               </div>
                           </div>
-
-                        <p>
-                          <label>
-                            <input type="checkbox" [ngModel]="customDescription" (ngModelChange)="onCustomDescriptionChanged($event)" [ngModelOptions]="{ standalone: true }" />
-                            <span>Custom description</span>
-                          </label>
-                        </p>
-                        <br>
-
+                       
+                            <div class="switch">
+                              <span>Custom description</span>  
+                              <label>
+                                <input type="checkbox" [ngModel]="useCustomDescription" (ngModelChange)="onUseCustomDescriptionChanged($event)" [ngModelOptions]="{ standalone: true }">
+                                <span class="lever"></span>
+                              </label>
+                            </div>
+                         
                           <div class="row">
-                            <div class="input-field col s12">
-                              <textarea [disabled]="!customDescription" [readonly]="!customDescription" id="descripionTextArea" class="materialize-textarea" style="height: 200px;"></textarea>
-                              <label for="descripionTextArea">Description</label>
+                            <div class="input-field col s8">
+                              <textarea [ngModel]="description" [ngModelOptions]="{ standalone: true }" [disabled]="!useCustomDescription" [readonly]="!useCustomDescription" 
+                              id="descripionTextArea" class="materialize-textarea" style="height: 300px;"></textarea>
+                            </div>
+                            <div class="input-field col s4">
+                              
                             </div>
                           </div>
                        </form>
