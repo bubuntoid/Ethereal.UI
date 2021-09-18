@@ -10,11 +10,11 @@ export class PreviewService {
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders() : HttpHeaders {
-    return new HttpHeaders({'Content-Type': 'text/plain'});
-  }
-
   getDescriptionPreview(youtubeVideoUrl:string){
     return this.http.post(`${this.url}/description`, {'url': youtubeVideoUrl}, {responseType: 'text'});
+  }
+
+  getChaptersPreview(youtubeVideoUrl:string, description:string){
+    return this.http.post<any[]>(`${this.url}/chapters`, {'url': youtubeVideoUrl, 'description': description}, {responseType: 'json'});
   }
 }

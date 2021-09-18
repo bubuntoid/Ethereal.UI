@@ -1,43 +1,9 @@
-<div class="valign-wrapper" style="width:100%;height:100%;position: absolute;">
-    <div class="valign" style="width:100%;">
-           <div class="row">
-              <div class="col s12 m6 offset-m3">
-                 <div class="card">
-                    <div class="card-content">
-                       <span class="card-title black-text">Ethereal</span>
-                       <form>
-                          <div class="row">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">video_settings</i>
-                                <input id="icon_prefix" type="text" class="validate" [ngModel]="url" (ngModelChange)="onUrlChanged($event)" [ngModelOptions]="{ standalone: true }">
-                                <label for="icon_prefix">Youtube video url</label>
-                              </div>
-                          </div>
-                       
-                            <div class="switch">
-                              <span>Custom description</span>  
-                              <label>
-                                <input type="checkbox" [ngModel]="useCustomDescription" (ngModelChange)="onUseCustomDescriptionChanged($event)" [ngModelOptions]="{ standalone: true }">
-                                <span class="lever"></span>
-                              </label>
-                            </div>
-                         
-                          <div class="row">
-                            <div class="input-field col s8">
-                              <textarea [ngModel]="description" [ngModelOptions]="{ standalone: true }" [disabled]="!useCustomDescription" [readonly]="!useCustomDescription" 
-                              id="descripionTextArea" class="materialize-textarea" style="height: 300px;"></textarea>
-                            </div>
-                            <div class="input-field col s4">
-                              
-                            </div>
-                          </div>
-                       </form>
-                    </div>
-                    <div class="card-action">
-                       <input type="submit" class="btn" value="Process">
-                    </div>
-                 </div>
-              </div>
-           </div>
-    </div>
+<div class="valign-wrapper" style="width:100%;height:100%;position: absolute;background: linear-gradient(to bottom, #dae2f8, #d6a4a4);">
+  <div class="valign" style="width:100%;">
+         <div class="row">
+            <div class="col s12 m6 offset-m3">
+                <router-outlet></router-outlet>
+            </div>
+         </div>
+  </div>
 </div>
