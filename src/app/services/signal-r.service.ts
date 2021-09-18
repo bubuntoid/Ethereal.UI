@@ -8,9 +8,9 @@ import { environment } from '../../environments/environment';
 export class SignalRService {
   private hubConnection!: signalR.HubConnection;
 
-  public startConnection = () => {
+  public startConnection = (jobId: string) => {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${environment.apiUrl}`)
+      .withUrl(`${environment.apiUrl}/logger?jobId=${jobId}`)
       .build()
 
     this.hubConnection

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MainService } from 'src/app/services/main.service';
 import { PreviewService } from 'src/app/services/preview.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { PreviewService } from 'src/app/services/preview.service';
 })
 export class CreateComponent implements OnInit {
 
-  constructor(private previewService: PreviewService, private router: Router) { }
+  constructor(private previewService: PreviewService, private router: Router,
+    private mainService: MainService) { }
 
   ngOnInit(): void {
   }
@@ -74,8 +76,14 @@ export class CreateComponent implements OnInit {
     this.isLoadingChapters = event;
   }
 
+  processing: boolean = false;
   onButtonClick() {
-    this.router.navigateByUrl('job/id');
+    this.processing = true;
+    this.mainService.initializeJob(this.url, this.description).subscribe(createdJobResponse => {
+      this.router.navigateByUrl(`job/${createdJobResponse.id}`);
+    }, error =>{
+      this.processing = false;
+    });
   }
 
   isValidYoutubeUrl(url : string) {
