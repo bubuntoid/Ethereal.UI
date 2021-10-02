@@ -14,6 +14,10 @@ export class MainService {
     return this.http.post<any>(`${this.url}/initialize`, {'url': youtubeVideoUrl, 'description': description}, {responseType: 'json'});
   }
 
+  convertVideoToMp3(youtubeVideoUrl:string){
+    return this.http.post<any>(`${this.url}/initializeWithoutChapters`, {'url': youtubeVideoUrl}, {responseType: 'json'});
+  }
+
   getJob(id:string){
     return this.http.get<any>(`${this.url}/${id}`, {responseType: 'json'});
   }

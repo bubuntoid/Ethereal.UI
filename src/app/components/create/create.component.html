@@ -66,7 +66,10 @@
        </form>
     </div>
     <div class="card-action right-align">
-       <input type="submit" (click)="onButtonClick()" class="btn red lighten-3 " value="Process" 
-        [disabled]="processing || previewChapters.length == 0 || hasError() || hasChaptersError()">
+      <input type="submit" class="btn red lighten-3 " value="Convert video to mp3" style="margin-right: 10px;" 
+      [disabled]="processing ||hasError() || url.length == 0" (click)="onConvertVideoToMp3ButtonClick()">
+
+       <input type="submit" (click)="onParseChaptersButtonClick()" class="btn red lighten-3 " value="Convert chapters" 
+        [disabled]="processing || previewChapters.length == 0 || hasError() || hasChaptersError()"> 
     </div>
  </div>

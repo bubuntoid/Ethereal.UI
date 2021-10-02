@@ -27,12 +27,20 @@ export class JobComponent implements OnInit {
       this.mainService.getJob(id).subscribe(jobResponse =>{
         this.job = jobResponse;
         this.currentStatus = this.job.status;
+        if (this.currentStatus == 'Failed'){
+          this.error = this.job.lastLogMessage;
+        }
         
         if (this.isProcessing()){
           this.signalR.startConnection(id);
           this.signalR.addReceiveLogListener(data =>{
+            console.log(data);
             this.currentStatus = data.status;
             this.currentLog = data.log;
+
+            if (this.currentStatus == 'Failed'){
+              this.error = this.currentLog;
+            }
           })
         }
 

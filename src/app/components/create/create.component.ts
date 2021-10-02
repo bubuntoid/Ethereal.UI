@@ -27,7 +27,7 @@ export class CreateComponent implements OnInit {
   }
 
   isCorrectUrl: boolean = false;
-  url: string = "";
+  url: string = '';
   isLoadingDescription: boolean = true;
   onUrlChanged(event: any){
     this.isCorrectUrl = this.isValidYoutubeUrl(event);
@@ -77,11 +77,22 @@ export class CreateComponent implements OnInit {
   }
 
   processing: boolean = false;
-  onButtonClick() {
+  onParseChaptersButtonClick() {
     this.processing = true;
     this.mainService.initializeJob(this.url, this.description).subscribe(createdJobResponse => {
       this.router.navigateByUrl(`job/${createdJobResponse.id}`);
+    }, error => {
+      error.error.errorMessage;
+      this.processing = false;
+    });
+  }
+
+  onConvertVideoToMp3ButtonClick() {
+    this.processing = true;
+    this.mainService.convertVideoToMp3(this.url).subscribe(createdJobResponse => {
+      this.router.navigateByUrl(`job/${createdJobResponse.id}`);
     }, error =>{
+      this.error = error.error.errorMessage;
       this.processing = false;
     });
   }
