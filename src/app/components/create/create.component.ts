@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { MainService } from 'src/app/services/main.service';
 import { PreviewService } from 'src/app/services/preview.service';
@@ -11,7 +12,7 @@ import { PreviewService } from 'src/app/services/preview.service';
 export class CreateComponent implements OnInit {
 
   constructor(private previewService: PreviewService, private router: Router,
-    private mainService: MainService) { }
+    private mainService: MainService, private title : Title) { }
 
   ngOnInit(): void {
   }
@@ -44,9 +45,16 @@ export class CreateComponent implements OnInit {
       this.onDescriptionChanged(descriptionResponse);
       this.isLoadingDescription = false;
     }, error => {
-      var jsonError = JSON.parse(error.error);
-      this.error = jsonError.errorMessage;
-      this.isLoadingDescription = false;
+      if (error.status == 0){
+        console.log(error);
+        this.error = 'Server not responding (CONNECTION REFUSED)';
+        this.isLoadingDescription = false;
+      } 
+      else {
+        var jsonError = JSON.parse(error.error);
+        this.error = jsonError.errorMessage;
+        this.isLoadingDescription = false;
+      }
     });
   }
 
@@ -80,6 +88,7 @@ export class CreateComponent implements OnInit {
   onParseChaptersButtonClick() {
     this.processing = true;
     this.mainService.initializeJob(this.url, this.description).subscribe(createdJobResponse => {
+      this.title.setTitle('Processing...');
       this.router.navigateByUrl(`job/${createdJobResponse.id}`);
     }, error => {
       error.error.errorMessage;
@@ -90,6 +99,7 @@ export class CreateComponent implements OnInit {
   onConvertVideoToMp3ButtonClick() {
     this.processing = true;
     this.mainService.convertVideoToMp3(this.url).subscribe(createdJobResponse => {
+      this.title.setTitle('Processing...');
       this.router.navigateByUrl(`job/${createdJobResponse.id}`);
     }, error =>{
       this.error = error.error.errorMessage;

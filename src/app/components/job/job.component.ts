@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MainService } from 'src/app/services/main.service';
@@ -13,7 +14,7 @@ export class JobComponent implements OnInit {
 
   private routeSub: Subscription | undefined;
   constructor(private route: ActivatedRoute, private mainService : MainService,
-    private signalR: SignalRService) { }
+    private signalR: SignalRService, private title : Title) { }
 
   error: string | undefined;
 
@@ -27,8 +28,12 @@ export class JobComponent implements OnInit {
       this.mainService.getJob(id).subscribe(jobResponse =>{
         this.job = jobResponse;
         this.currentStatus = this.job.status;
-        if (this.currentStatus == 'Failed'){
+        this.currentLog = this.job.lastLogMessage;
+        this.title.setTitle(this.currentLog);
+
+        if (this.isFailed()){
           this.error = this.job.lastLogMessage;
+          this.title.setTitle(this.job.lastLogMessage);
         }
         
         if (this.isProcessing()){
@@ -37,10 +42,10 @@ export class JobComponent implements OnInit {
             console.log(data);
             this.currentStatus = data.status;
             this.currentLog = data.log;
-
-            if (this.currentStatus == 'Failed'){
+            if (this.isFailed()){
               this.error = this.currentLog;
             }
+            this.title.setTitle(this.currentLog);
           })
         }
 
@@ -67,6 +72,6 @@ export class JobComponent implements OnInit {
   }
 
   isFailed(){
-    return this.currentStatus == 'Failed';
+    return this.currentStatus == 'Failed' || this.currentStatus == 'Expired';
   }
 }
